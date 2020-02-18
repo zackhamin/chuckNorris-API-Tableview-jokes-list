@@ -9,13 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-//    Array for dummy data
+    //    Array for dummy data
     
-//    var jokes = ["Chuck Norris doesn't bug hunt as that signifies a probability of failure, he goes bug killing.","Chuck Norris once sued Burger King after they refused to put razor wire in his Whopper Jr, insisting that that actually is &quot;his&quot; way.","As President Roosevelt said: &quot;We have nothing to fear but fear itself. And Chuck Norris.&quot;","Chuck Norris doesn't have pubic hairs because hair doesn't grow on balls of steal.","Chuck Norris doesn't use reflection, reflection asks politely for his help.","Chuck Norris' first job was as a paperboy. There were no survivors.","Chuck Norris crossed the road. No one has ever dared question his motives.","Chuck Norris once pissed in a gas tank of a semi truck as a joke - that truck is now know as Optimus Prime.","Chuck Norris does not code in cycles, he codes in strikes.","Chuck Norris once pulled out a single hair from his beard and skewered three men through the heart with it."]
+    //    var jokes = ["Chuck Norris doesn't bug hunt as that signifies a probability of failure, he goes bug killing.","Chuck Norris once sued Burger King after they refused to put razor wire in his Whopper Jr, insisting that that actually is &quot;his&quot; way.","As President Roosevelt said: &quot;We have nothing to fear but fear itself. And Chuck Norris.&quot;","Chuck Norris doesn't have pubic hairs because hair doesn't grow on balls of steal.","Chuck Norris doesn't use reflection, reflection asks politely for his help.","Chuck Norris' first job was as a paperboy. There were no survivors.","Chuck Norris crossed the road. No one has ever dared question his motives.","Chuck Norris once pissed in a gas tank of a semi truck as a joke - that truck is now know as Optimus Prime.","Chuck Norris does not code in cycles, he codes in strikes.","Chuck Norris once pulled out a single hair from his beard and skewered three men through the heart with it."]
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var changeURL = true
+    var explicit = "limitTo=[nerdy,explicit]"
+    var nonExplicit = "limitTo=[nerdy]"
     var randomJokeModel: JokesResponse?
+    
     
     // MARK: - Welcome
     struct JokesResponse: Codable {
@@ -40,12 +43,35 @@ class ViewController: UIViewController {
         case noDateError
     }
     
+    
+    @IBAction func changeURL(_ sender: UISwitch) {
+        if sender.isOn{
+            changeURL = true
+        } else {
+            changeURL = false
+        }
+    }
+    
     fileprivate func fetchJokesJSON(completion: @escaping (Result<JokesResponse, Error>) -> ()) {
         
-        let urlString = "http://api.icndb.com/jokes/"
+        //        var urlNonExplicit = "http://api.icndb.com/jokes/limitTo=[nerdy]"
+        //        var urlExplicit = "http://api.icndb.com/jokes/limitTo=[nerdy,explicit]"
+        var urlString = "http://api.icndb.com/jokes/"
+        
+        if (changeURL == true) {
+            urlString.append(nonExplicit)
+        } else if (changeURL == false) {
+            urlString.append(explicit)
+        } else {
+            return
+        }
+        
+        print(urlString)
+        
         guard let url = URL(string: urlString) else {return}
         let urlRequest = URLRequest(url: url)
         
+        print(url)
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let err = error {
                 completion(.failure(err))
@@ -65,6 +91,7 @@ class ViewController: UIViewController {
             }
         }.resume()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,7 +120,6 @@ class ViewController: UIViewController {
     }
     
 }
-
 //extension ViewController: UITableViewDataSource{
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return jokes.count
@@ -125,3 +151,5 @@ extension ViewController: UITableViewDataSource{
 }
 
 //value[0].joke
+
+
