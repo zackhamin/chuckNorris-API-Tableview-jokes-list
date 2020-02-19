@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Dashboard View Controller-->
         <scene sceneID="cii-EB-Li0">
             <objects>
-                <viewController id="Vfm-6J-BBU" sceneMemberID="viewController">
+                <viewController id="Vfm-6J-BBU" customClass="DashboardViewController" customModule="RandomJokesList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z5J-ig-DjV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,14 +26,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Click To Enter "/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="YK5-PN-lAr"/>
+                                    <action selector="enterButton:" destination="Vfm-6J-BBU" eventType="touchUpInside" id="zKz-En-ecZ"/>
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VxM-bK-9RH">
                                 <rect key="frame" x="36" y="742" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="changeURL:" destination="KKk-Fv-022" eventType="valueChanged" id="nXd-lS-2Ns"/>
+                                    <action selector="urlSwitch:" destination="Vfm-6J-BBU" eventType="valueChanged" id="UP9-SG-XQp"/>
                                 </connections>
                             </switch>
                         </subviews>
@@ -49,16 +49,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TlR-wu-g8P"/>
                     </view>
+                    <connections>
+                        <outlet property="clickToEnterButton" destination="H86-bq-enf" id="OHg-OJ-o3O"/>
+                        <outlet property="explicitSwitch" destination="VxM-bK-9RH" id="Kum-nl-Tiq"/>
+                        <outlet property="warningLabel" destination="ztD-ul-GMI" id="kOa-kS-sqb"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="goToTableView" id="1nl-u7-qkt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YBQ-j8-Rpt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="KKk-Fv-022" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-792.75362318840587" y="137.94642857142856"/>
+            <point key="canvasLocation" x="-741" y="138"/>
         </scene>
-        <!--View Controller-->
+        <!--Jokes Table View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RandomJokesList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="JokesTableViewController" customModule="RandomJokesList" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,7 +72,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="jokeCell" translatesAutoresizingMaskIntoConstraints="NO" id="Awb-9M-o7A">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="jokeCell" translatesAutoresizingMaskIntoConstraints="NO" id="Awb-9M-o7A">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Awb-9M-o7A" id="kbw-I5-nu9">
